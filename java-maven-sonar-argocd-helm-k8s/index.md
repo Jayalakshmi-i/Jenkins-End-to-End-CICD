@@ -34,7 +34,7 @@ Launched Jenkins application at http://3.85.177.164:8080
 
 ![image](https://github.com/Jayalakshmi-i/Jenkins-End-to-End-CICD/assets/141424247/e641df66-9c1c-427f-9344-21a0f1f4d232)
 
-### Step 2: Create a new Pipeline job, and configure it with the Git repository and define the JenkinsFile path
+### Step 2: Create a new Pipeline job, configure it with the Git repository, and define the JenkinsFile path
 ![image](https://github.com/Jayalakshmi-i/Jenkins-End-to-End-CICD/assets/141424247/350966db-1e74-4898-a212-44d358046606)
 
 Jenkinsfile path: java-maven-sonar-argocd-helm-k8s/spring-boot-app/JenkinsFile
@@ -58,12 +58,14 @@ unzip *
 chmod -R 755 /home/sonarqube/sonarqube-9.4.0.54424
 chown -R sonarqube:sonarqube /home/sonarqube/sonarqube-9.4.0.54424
 cd sonarqube-9.4.0.54424/bin/linux-x86-64/   // Inside sonarqube-9.4.0.54424/bin/ can see different type of machines like windows, Linux, choose accordingly
+
 ./sonar.sh start
 ```
 ![image](https://github.com/Jayalakshmi-i/Jenkins-End-to-End-CICD/assets/141424247/546db28d-b3c8-4a1a-a43e-2b215498853b)
 
 
-Hurray !! Now, you can access the SonarQube Server at http://3.85.177.164:9000   Wait for the server to load, and then enter the username and password as admin/admin and update it with a new strong password.
+Hurray !! Now, you can access the SonarQube Server at http://3.85.177.164:9000   
+Wait for the server to load, and then enter the username and password as admin/admin and update it with a new strong password.
 ![image](https://github.com/Jayalakshmi-i/Jenkins-End-to-End-CICD/assets/141424247/dbd09b1e-a344-4c58-8c88-ad3b03d309cf)
 
 ![image](https://github.com/Jayalakshmi-i/Jenkins-End-to-End-CICD/assets/141424247/a44d88ac-fe46-4412-877c-390bd8e7725f)
@@ -84,7 +86,7 @@ Now go to the Jenkins server
 
 ### Install Docker and Docker Slave Configuration
 
-Run the below command to Install Docker
+Run the below command to Install the Docker
 
 ```
 sudo apt update
@@ -113,7 +115,7 @@ Run the below commands to setup the K8S cluster
 ```
 minikube start –memory=4098 –driver=virtualbox
 ```
-Go to operatorhub.io website, search for **ArgoCD ** Click on install. It will displays the commands to run.
+Go to the operatorhub.io website, search for **ArgoCD ** Click on install. It will display the commands to run.
 ```
 curl -sL https://github.com/operator-framework/operator-lifecycle-manager/releases/download/v0.27.0/install.sh | bash -s v0.27.0
 kubectl create -f https://operatorhub.io/install/argocd-operator.yaml
@@ -125,15 +127,15 @@ For Docker:
 ```Kind: Username and password for docker
 Username of Docker hub and password
 ID: "docker-cred" as in Jenkins file
-Click on create
+Click on Create
 ```
 For Github:
 
 ```
 Kind: secret text
-Secret: Enter GitHub token
+Secret: Enter the GitHub token
 ID: github
-Click on create
+Click on Create
 ```
 ![image](https://github.com/Jayalakshmi-i/Jenkins-End-to-End-CICD/assets/141424247/d6626aa8-325a-40a7-afe4-884597ea11f2)
 
