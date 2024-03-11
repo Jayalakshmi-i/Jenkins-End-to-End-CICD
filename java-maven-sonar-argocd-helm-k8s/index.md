@@ -11,12 +11,12 @@ Prerequisites:
    -  Helm package manager
    -  Argo CD
      
-### Step 1: Launched an Ec2 instance with latest Ubuuntu image, t2.large instance type and installed Java jdk and Jenkins.
+### Step 1: Launched an Ec2 instance with the latest Ubuntu image, t2.large instance type, and installed Java JDK and Jenkins.
 ![image](https://github.com/Jayalakshmi-i/Jenkins-End-to-End-CICD/assets/141424247/98a6f0cb-216a-4bee-8b3c-27ce6adbddff)
 
 #### Commands to install Java and Jenkins
 
-Install Java jdk and Jenkins
+Install Java JDK and Jenkins
 
 ```
 sudo apt update
@@ -34,28 +34,55 @@ Launched Jenkins application at http://3.85.177.164:8080
 
 ![image](https://github.com/Jayalakshmi-i/Jenkins-End-to-End-CICD/assets/141424247/e641df66-9c1c-427f-9344-21a0f1f4d232)
 
-### Step 2: Create a new Pipeline job and configure it with Git repository and define JenkinsFile path
+### Step 2: Create a new Pipeline job, and configure it with the Git repository and define the JenkinsFile path
 ![image](https://github.com/Jayalakshmi-i/Jenkins-End-to-End-CICD/assets/141424247/350966db-1e74-4898-a212-44d358046606)
 
 Jenkinsfile path: java-maven-sonar-argocd-helm-k8s/spring-boot-app/JenkinsFile
 
-![image](https://github.com/Jayalakshmi-i/Jenkins-End-to-End-CICD/assets/141424247/9b4b8354-b2d8-4da5-ba1b-000c9faa936d)
-![image](https://github.com/Jayalakshmi-i/Jenkins-End-to-End-CICD/assets/141424247/f3a1e177-4d61-4131-9957-840083d4a442)
+![image](https://github.com/Jayalakshmi-i/Jenkins-End-to-End-CICD/assets/141424247/19c0fd8d-f59d-4181-b57f-ab1d73e80147)
 
-## Install the Docker Pipeline plugin in Jenkins:
+![image](https://github.com/Jayalakshmi-i/Jenkins-End-to-End-CICD/assets/141424247/9e18866f-5e16-4acb-b6b1-6714c2c1e96c)
 
-   - Log in to Jenkins.
-   - Go to Manage Jenkins > Manage Plugins.
-   - In the Available tab, search for "Docker Pipeline".
-   - Select the plugin and click the Install button.
-   - Restart Jenkins after the plugin is installed.
-   
-<img width="1392" alt="Screenshot 2023-02-01 at 12 17 02 PM" src="https://user-images.githubusercontent.com/43399466/215973898-7c366525-15db-4876-bd71-49522ecb267d.png">
+### Go to the Jenkins plugin section and install Docker Pipeline and Sonarqube scanner plugin
 
-Wait for the Jenkins to be restarted.
+### Step 3: Install and Configure a Sonarqube on the Jenkins server:
+```
+sudo su –
+apt install unzip
+adduser sonarqube
+
+sudo su – sonarqube
+wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-9.4.0.54424.zip
+unzip *
+
+chmod -R 755 /home/sonarqube/sonarqube-9.4.0.54424
+chown -R sonarqube:sonarqube /home/sonarqube/sonarqube-9.4.0.54424
+cd sonarqube-9.4.0.54424/bin/linux-x86-64/   // Inside sonarqube-9.4.0.54424/bin/ can see different type of machines like windows, Linux, choose accordingly
+./sonar.sh start
+```
+![image](https://github.com/Jayalakshmi-i/Jenkins-End-to-End-CICD/assets/141424247/546db28d-b3c8-4a1a-a43e-2b215498853b)
 
 
-## Docker Slave Configuration
+Hurray !! Now, you can access the SonarQube Server at http://3.85.177.164:9000   Wait for the server to load, and then enter the username and password as admin/admin and update it with a new strong password.
+![image](https://github.com/Jayalakshmi-i/Jenkins-End-to-End-CICD/assets/141424247/dbd09b1e-a344-4c58-8c88-ad3b03d309cf)
+
+![image](https://github.com/Jayalakshmi-i/Jenkins-End-to-End-CICD/assets/141424247/a44d88ac-fe46-4412-877c-390bd8e7725f)
+
+Now need to create a security token for Sonarqube to communicate with the Jenkins server.
+#### Steps to configure: 
+Go to Sonarqube server >> My account >> Security >> Enter a Token name >> Generate and copy 
+
+Now go to the Jenkins server 
+>> Manage Jenkins
+>> Manage credentials
+>> System
+>> Global credentials >> Add
+>> Select Kind: Secret text
+>> Paste the copied token in the Secret section and ID = "sonarqube"
+>> Click on Create
+
+
+### Install Docker and Docker Slave Configuration
 
 Run the below command to Install Docker
 
@@ -76,10 +103,41 @@ systemctl restart docker
 Once you are done with the above steps, it is better to restart Jenkins.
 
 ```
-http://<ec2-instance-public-ip>:8080/restart
+http://3.85.177.164:8080/restart
 ```
 
 The docker agent configuration is now successful.
+
+### Steps to configure Kubernetes cluster on our local machine
+Run the below commands to setup the K8S cluster 
+```
+minikube start –memory=4098 –driver=virtualbox
+```
+Go to operatorhub.io website, search for **ArgoCD ** Click on install. It will displays the commands to run.
+```
+curl -sL https://github.com/operator-framework/operator-lifecycle-manager/releases/download/v0.27.0/install.sh | bash -s v0.27.0
+kubectl create -f https://operatorhub.io/install/argocd-operator.yaml
+kubectl get pods –n operators
+```
+Meanwhile, add **Github and Docker credentials** to the Jenkins server:
+
+For Docker:
+```Kind: Username and password for docker
+Username of Docker hub and password
+ID: "docker-cred" as in Jenkins file
+Click on create
+```
+For Github:
+
+```
+Kind: secret text
+Secret: Enter GitHub token
+ID: github
+Click on create
+```
+![image](https://github.com/Jayalakshmi-i/Jenkins-End-to-End-CICD/assets/141424247/d6626aa8-325a-40a7-afe4-884597ea11f2)
+
+
 
 
 
