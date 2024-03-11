@@ -43,7 +43,7 @@ Jenkinsfile path: java-maven-sonar-argocd-helm-k8s/spring-boot-app/JenkinsFile
 
 ![image](https://github.com/Jayalakshmi-i/Jenkins-End-to-End-CICD/assets/141424247/9e18866f-5e16-4acb-b6b1-6714c2c1e96c)
 
-### Go to the Jenkins plugin section and install Docker Pipeline and Sonarqube scanner plugin
+Go to the **Jenkins server Plugin section** and install the `Docker Pipeline` and `Sonarqube scanner` plugin
 
 ### Step 3: Install and Configure a Sonarqube on the Jenkins server:
 ```
@@ -57,7 +57,7 @@ unzip *
 
 chmod -R 755 /home/sonarqube/sonarqube-9.4.0.54424
 chown -R sonarqube:sonarqube /home/sonarqube/sonarqube-9.4.0.54424
-cd sonarqube-9.4.0.54424/bin/linux-x86-64/   // Inside sonarqube-9.4.0.54424/bin/ can see different type of machines like windows, Linux, choose accordingly
+cd sonarqube-9.4.0.54424/bin/linux-x86-64/         //Inside sonarqube-9.4.0.54424/bin/ can see different type of machines like windows, Linux, choose accordingly
 
 ./sonar.sh start
 ```
@@ -66,6 +66,7 @@ cd sonarqube-9.4.0.54424/bin/linux-x86-64/   // Inside sonarqube-9.4.0.54424/bin
 
 Hurray !! Now, you can access the SonarQube Server at http://3.85.177.164:9000   
 Wait for the server to load, and then enter the username and password as admin/admin and update it with a new strong password.
+
 ![image](https://github.com/Jayalakshmi-i/Jenkins-End-to-End-CICD/assets/141424247/dbd09b1e-a344-4c58-8c88-ad3b03d309cf)
 
 ![image](https://github.com/Jayalakshmi-i/Jenkins-End-to-End-CICD/assets/141424247/a44d88ac-fe46-4412-877c-390bd8e7725f)
@@ -74,7 +75,8 @@ Now need to create a security token for Sonarqube to communicate with the Jenkin
 #### Steps to configure: 
 Go to Sonarqube server >> My account >> Security >> Enter a Token name >> Generate and copy 
 
-Now go to the Jenkins server 
+Now go to the Jenkins server
+```
 >> Manage Jenkins
 >> Manage credentials
 >> System
@@ -82,32 +84,24 @@ Now go to the Jenkins server
 >> Select Kind: Secret text
 >> Paste the copied token in the Secret section and ID = "sonarqube"
 >> Click on Create
-
-
+```
 ### Install Docker and Docker Slave Configuration
-
 Run the below command to Install the Docker
-
 ```
 sudo apt update
 sudo apt install docker.io
 ```
- 
 ### Grant Jenkins user and Ubuntu user permission to docker deamon.
-
 ```
 sudo su - 
 usermod -aG docker jenkins
 usermod -aG docker ubuntu
 systemctl restart docker
 ```
-
 Once you are done with the above steps, it is better to restart Jenkins.
-
 ```
 http://3.85.177.164:8080/restart
 ```
-
 The docker agent configuration is now successful.
 
 ### Steps to configure Kubernetes cluster on our local machine
@@ -115,14 +109,13 @@ Run the below commands to setup the K8S cluster
 ```
 minikube start –memory=4098 –driver=virtualbox
 ```
-Go to the operatorhub.io website, search for **ArgoCD ** Click on install. It will display the commands to run.
+Go to the `operatorhub.io` website, search for **ArgoCD** Click on install. It will display the commands to run.
 ```
 curl -sL https://github.com/operator-framework/operator-lifecycle-manager/releases/download/v0.27.0/install.sh | bash -s v0.27.0
 kubectl create -f https://operatorhub.io/install/argocd-operator.yaml
 kubectl get pods –n operators
 ```
 Meanwhile, add **Github and Docker credentials** to the Jenkins server:
-
 For Docker:
 ```Kind: Username and password for docker
 Username of Docker hub and password
@@ -130,7 +123,6 @@ ID: "docker-cred" as in Jenkins file
 Click on Create
 ```
 For Github:
-
 ```
 Kind: secret text
 Secret: Enter the GitHub token
