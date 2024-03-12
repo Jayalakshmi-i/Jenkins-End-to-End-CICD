@@ -39,9 +39,9 @@ Launched Jenkins application at http://3.85.177.164:8080
 ### Step 2: Create a new Pipeline job, configure it with the Git repository, and define the JenkinsFile path
 ![image](https://github.com/Jayalakshmi-i/Jenkins-End-to-End-CICD/assets/141424247/350966db-1e74-4898-a212-44d358046606)
 
-Jenkinsfile path: java-maven-sonar-argocd-helm-k8s/spring-boot-app/JenkinsFile
-
 ![image](https://github.com/Jayalakshmi-i/Jenkins-End-to-End-CICD/assets/141424247/19c0fd8d-f59d-4181-b57f-ab1d73e80147)
+
+Jenkinsfile path: `java-maven-sonar-argocd-helm-k8s/spring-boot-app/JenkinsFile`
 
 ![image](https://github.com/Jayalakshmi-i/Jenkins-End-to-End-CICD/assets/141424247/9e18866f-5e16-4acb-b6b1-6714c2c1e96c)
 
