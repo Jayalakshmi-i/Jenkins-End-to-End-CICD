@@ -173,7 +173,7 @@ Now, can see the ArgoCD cluster pod's status:
 ![image](https://github.com/Jayalakshmi-i/Jenkins-End-to-End-CICD/assets/141424247/1d4dc8d5-7d05-4a97-b75a-a4aac2092f77)
 ![image](https://github.com/Jayalakshmi-i/Jenkins-End-to-End-CICD/assets/141424247/a0f75291-e1f7-49fb-bd25-012183b8c6b7)
 
-Screenshot of ArgoCD services With the `example-argocd-server` status as ClusterIP:
+Screenshot of ArgoCD services with the `example-argocd-server` status as ClusterIP:
 ![image](https://github.com/Jayalakshmi-i/Jenkins-End-to-End-CICD/assets/141424247/f88c9c87-eaf9-4b6e-bf3e-8f88c4c49238)
 
 In the above screenshot, we can see `example-argocd-server` status as ClusterIP in which we won't be able to access the ArgoCD server on the website, so to make it accessible on the website using the IP address we will change the **TYPE** to ``NodePort`` mode.
@@ -198,21 +198,27 @@ Enter the username as Admin and for Password need to get it from ``example-argoc
 
 ![image](https://github.com/Jayalakshmi-i/Jenkins-End-to-End-CICD/assets/141424247/8a5dbd6d-b0cb-4902-95fe-195ffebb526b)
 
-Run the command ` kubectl edit secret example-argocd-cluster ` and copy the password from ``admin.password`` and execute the command ` echo 'copiedpassword' | base64 -d ` to decrypt the password and use the newly created password to login to ArgoCD server.
+Run the command ` kubectl edit secret example-argocd-cluster ` and copy the password from ``admin.password`` value and execute the command ` echo 'copiedpassword' | base64 -d ` to decrypt the password and use the newly created password to login to the ArgoCD server.
 
 
 ![image](https://github.com/Jayalakshmi-i/Jenkins-End-to-End-CICD/assets/141424247/dd84643e-f74c-412f-bf0e-2f7a10802246)
 
-Click on Create Application to pull the data and manage the resouce on the cluster
+Click on Create Application to pull the data and manage the resources on the cluster
 
 ![image](https://github.com/Jayalakshmi-i/Jenkins-End-to-End-CICD/assets/141424247/37d3c71f-6772-436e-bbe8-0d260fe2418b)
 
 ![image](https://github.com/Jayalakshmi-i/Jenkins-End-to-End-CICD/assets/141424247/bd3f9675-9f9c-4dc1-960e-406774e9c044)
 ![image](https://github.com/Jayalakshmi-i/Jenkins-End-to-End-CICD/assets/141424247/8fc4c482-95e7-4589-94b0-3b250bfd8a16)
 
-Here can see the deployed `spring-boot-app` on the cluster with healthy state
+Here can see the deployed `spring-boot-app` on the cluster with a healthy state
 ![image](https://github.com/Jayalakshmi-i/Jenkins-End-to-End-CICD/assets/141424247/07d8e9ac-7fce-4ab4-8ca0-06034d446737)
 
+Screenshot of deployed spring boot application and pods on minikube cluster:
+
+![image](https://github.com/Jayalakshmi-i/Jenkins-End-to-End-CICD/assets/141424247/47ce9c9d-f392-46e2-a825-dd33440c64da)
+![image](https://github.com/Jayalakshmi-i/Jenkins-End-to-End-CICD/assets/141424247/cc1d576c-a5eb-4580-b7be-48581d5d62d6)
+
+This end-to-end Jenkins pipeline will automate the entire CI/CD process for a Java application, from code checkout to production deployment, using popular tools like SonarQube, Argo CD, Helm, and Kubernetes.
 
 
 
