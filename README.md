@@ -1,6 +1,9 @@
 # Jenkins Pipeline for Java based application using Maven, SonarQube, Argo CD, Helm, and Kubernetes
 
+YouTube Video URL of the project ->  https://www.youtube.com/watch?v=JGQI5pkK82w
+
 <img width="1000" alt="Screenshot 2023-03-28 at 9 38 09 PM" src="https://github.com/Jayalakshmi-i/Jenkins-End-to-End-CICD/assets/141424247/f017f64d-bd32-434b-a632-60f0db82e4b3">
+
 Here are the step-by-step details to set up an end-to-end Jenkins pipeline for a Java application using SonarQube, Argo CD, Helm, and Kubernetes:
 
 Prerequisites:
@@ -43,7 +46,8 @@ Jenkinsfile path: java-maven-sonar-argocd-helm-k8s/spring-boot-app/JenkinsFile
 ![image](https://github.com/Jayalakshmi-i/Jenkins-End-to-End-CICD/assets/141424247/9e18866f-5e16-4acb-b6b1-6714c2c1e96c)
 
 #### Step 2.1: Go to the Jenkins server Plugin section and install the `Docker Pipeline` and `Sonarqube scanner` plugin
-
+Once installing the plugins, it is better to restart Jenkins.
+`http://3.85.177.164:8080/restart`
 ### Step 3: Install and Configure a Sonarqube on the Jenkins server:
 ```
 sudo su –
@@ -148,11 +152,16 @@ Screenshot of Console Output with Success message of the Jenkins Pipeline:
 
 ![image](https://github.com/Jayalakshmi-i/Jenkins-End-to-End-CICD/assets/141424247/e51e38e1-4c71-4db2-b95a-debb1082ceea)
 
-Will check if the Maven build has pushed the report to Sonarqube
+The successful execution of the last stage of the Jenkins Pipeline should trigger the Shell Script to update the manifest folder and the Docker image should appear on the personal Docker Hub space.
+
+![image](https://github.com/Jayalakshmi-i/Jenkins-End-to-End-CICD/assets/141424247/93b297b1-7300-4118-805e-2e0048ab3a62)
+
+Additionally, the Maven build should push the report to Sonarqube
+
 ![image](https://github.com/Jayalakshmi-i/Jenkins-End-to-End-CICD/assets/141424247/4198be74-41ca-44a9-bd63-deacfa2df7dc)
 
 
-#### Step 6.1: Configuring the ArgoCD server
+### Step 7: Configuring the ArgoCD server
 Screenshot of ArgoCD Operator status
 ![image](https://github.com/Jayalakshmi-i/Jenkins-End-to-End-CICD/assets/141424247/73b3ec57-deb5-4f33-9159-9d17d6e75251)
 
